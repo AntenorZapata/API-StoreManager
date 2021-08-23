@@ -1,11 +1,10 @@
 const dotenv = require('dotenv');
 
-
-dotenv.config({path: './config.env'});
-const app = require('./app');
+dotenv.config({ path: './config.env' });
+const app = require('./index');
 
 const port = process.env.PORT;
 
-const server = app.listen(port, () => {
+app.listen(port, () => {
   console.log(`Rodando na porta ${port}`);
 });
