@@ -1,6 +1,6 @@
-// const { ObjectId } = require('mongodb');
 const express = require('express');
 const productsRouter = require('./routes/productsRoutes');
+
 
 const app = express();
 
