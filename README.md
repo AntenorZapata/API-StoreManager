@@ -1,3 +1,8 @@
+
+## API CRUD - NodeJs, Express e MongoDB / Arquitetura MSC / TDD.
+
+API para um sistema de gerenciamento de vendas.
+
 # Habilidades
 
 - Entender o funcionamento da camada de Model;
@@ -8,13 +13,6 @@
 - Melhorar manutenibilidade e reusabilidade do seu código;
 - Entender e aplicar os padrões REST;
 - Escrever assinaturas para APIs intuitivas e facilmente entendíveis.
-
-## O que deverá ser desenvolvido
-
-Você vai desenvolver sua primeira API utilizando a arquitetura MSC!
-
-A API a ser construída trata-se de um sistema de gerenciamento de vendas, onde será possível criar, visualizar, deletar e atualizar produtos e vendas.
-
 
 ## Lista de requisitos
 
