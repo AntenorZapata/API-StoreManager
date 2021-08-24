@@ -19,25 +19,7 @@ const getAllProds = async () => {
     .then((result) => result);
 };
 
-// const create = async (firstName, middleName, lastName) =>
-//   connection()
-//     .then((db) => db.collection('authors').insertOne({ firstName, middleName, lastName }))
-//     .then(result => getNewAuthor({ id: result.insertedId, firstName, middleName, lastName }));
-
 module.exports = {
   createProd,
-  getAllProds
+  getAllProds,
 };
-
-// const createMovie = async ({ title, director, releaseYear }) => {
-//   const { insertedId } = await connection().then((db) =>
-//     db.collection('movies').insertOne({ title, director, releaseYear })
-//   );
-
-//   return {
-//     id: insertedId,
-//     title,
-//     director,
-//     releaseYear,
-//   };
-// };
