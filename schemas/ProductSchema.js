@@ -11,7 +11,7 @@ const errors = {
   id: 'Wrong id format'
 };
 
-const isNotString = (value) => typeof value !== 'string';
+// const isNotString = (value) => typeof value !== 'string';
 const nameLength = (value, min) => value.length <= min;
 const isNumber = (value) => typeof value !== 'number';
 const lessThanZero = (value) => value <= NUM;
@@ -19,10 +19,6 @@ const lessThanZero = (value) => value <= NUM;
 
 const validate = async (name, quantity) => {
   const len  = 5;
-
-  const allProducts = await getAllProds();
-  const prodByName = allProducts.products.find((item) => item.name === name);
-  if (prodByName) return { code, message: errors.name };
 
   switch (true) {
   case nameLength(name, len): return { code, message: errors.name_length };
@@ -36,9 +32,10 @@ const validateId = async (id) => {
 
   const allProducts = await getAllProds();
   const prodById = allProducts.products.find((item) => item._id.equals(id));
-  console.log(prodById);
+
   if (!prodById) return { code, message: errors.id };
   return {};
 };
+
 
 module.exports = { validate, validateId };

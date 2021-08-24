@@ -23,9 +23,24 @@ const getAllProds = async () => {
   };
 };
 
+const updateProd = async (id, name, quantity) => {
+  const { insertedId } = await connection().then((db) =>
+    db.collection('products').updateOne({ _id: ObjectId(id) },
+      { $set: { name, quantity } }),
+  );
+
+  return {
+    _id: insertedId,
+    name,
+    quantity
+  };
+};
+
 const getProdById = async (id) => {
-  const response = await getAllProds();
-  const product = response.products.find((el) => el._id.equals(id));
+  const product = await connection()
+    .then((db) => db.collection('products').findOne(ObjectId(id)))
+    .then((result) => result);
+
   return product;
 };
 
@@ -33,4 +48,5 @@ module.exports = {
   createProd,
   getAllProds,
   getProdById,
+  updateProd,
 };

@@ -15,7 +15,7 @@ function readCoverageFile() {
   return fs.readFile(COVERAGE_FILE_PATH).then(JSON.parse);
 }
 
-describe('11 - Escreva testes para seus models', () => {
+describe.only('11 - Escreva testes para seus models', () => {
   beforeAll(async () => {
     await exec(NPX_NYC_COMMAND('models'));
   });

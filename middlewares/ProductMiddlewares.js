@@ -1,9 +1,11 @@
 const ProducSchema = require('../schemas/ProductSchema');
 
+
 const validateProduct = async (req, res, next) => {
   const { name, quantity } = req.body;
 
-  const  validations = await ProducSchema.validate(name, quantity);
+  const bad_request = 400;
+  const validations = await ProducSchema.validate(name, quantity);
 
   if (validations.message) {
     return res.status(validations.code).json({
@@ -16,6 +18,8 @@ const validateProduct = async (req, res, next) => {
 
   next();
 };
+
+
 
 const validateProductId = async (req, res, next) => {
   const {id} = req.params;
@@ -30,11 +34,11 @@ const validateProductId = async (req, res, next) => {
       },
     });
   }
-
   next();
 };
 
 module.exports = {
   validateProduct,
-  validateProductId
+  validateProductId,
+
 };
