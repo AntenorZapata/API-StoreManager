@@ -1,11 +1,14 @@
 const { getAllProds } = require('../models/productModel');
 
 const NUM = 0;
+const code = 422;
+
 const errors = {
   name_length: '"name" length must be at least 5 characters long',
   quant_type: '"quantity" must be a number',
   quant_amount: '"quantity" must be larger than or equal to 1',
-  name: 'Product already exists'
+  name: 'Product already exists',
+  id: 'Wrong id format'
 };
 
 const isNotString = (value) => typeof value !== 'string';
@@ -13,14 +16,13 @@ const nameLength = (value, min) => value.length <= min;
 const isNumber = (value) => typeof value !== 'number';
 const lessThanZero = (value) => value <= NUM;
 
-const validate = async (name, quantity) => {
 
-  const code = 422;
+const validate = async (name, quantity) => {
   const len  = 5;
 
   const allProducts = await getAllProds();
-  const prod = allProducts.find((item) => item.name === name);
-  if (prod) return { code, message: errors.name };
+  const prodByName = allProducts.products.find((item) => item.name === name);
+  if (prodByName) return { code, message: errors.name };
 
   switch (true) {
   case nameLength(name, len): return { code, message: errors.name_length };
@@ -28,9 +30,15 @@ const validate = async (name, quantity) => {
   case lessThanZero(quantity): return { code, message: errors.quant_amount };
   default: return {};
   }
-
-
-
 };
 
-module.exports = {validate};
+const validateId = async (id) => {
+
+  const allProducts = await getAllProds();
+  const prodById = allProducts.products.find((item) => item._id.equals(id));
+  console.log(prodById);
+  if (!prodById) return { code, message: errors.id };
+  return {};
+};
+
+module.exports = { validate, validateId };
