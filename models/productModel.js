@@ -13,6 +13,12 @@ const createProd = async (name, quantity) => {
   };
 };
 
+const getAllProds = async () => {
+  return await connection()
+    .then((db) => db.collection('products').find().toArray())
+    .then((result) => result);
+};
+
 // const create = async (firstName, middleName, lastName) =>
 //   connection()
 //     .then((db) => db.collection('authors').insertOne({ firstName, middleName, lastName }))
@@ -20,6 +26,7 @@ const createProd = async (name, quantity) => {
 
 module.exports = {
   createProd,
+  getAllProds
 };
 
 // const createMovie = async ({ title, director, releaseYear }) => {
