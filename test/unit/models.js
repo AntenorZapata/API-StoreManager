@@ -32,27 +32,27 @@ describe('products route tests', () => {
 
       const response = await createProd(payLoad);
 
-      // it('should return a new product', async () => {
-      //   expect(response).to.have.all.keys('_id', 'name', 'quantity');
-      // });
+      it('should return a new product', async () => {
+        expect(response).to.have.all.keys('_id', 'name', 'quantity');
+      });
 
-      // it('the new product is a object', async () => {
-      //   expect(response).to.be.an('object');
-      // });
+      it('the new product is a object', async () => {
+        expect(response).to.be.an('object');
+      });
     });
   });
 
-  // describe('should return all products', () => {
-  //   it('should return an array', async () => {
-  //     const response = await getAllProds();
-  //     expect(response).to.be.an('array');
-  //   });
+  describe('should return all products', () => {
+    it('should return an array', async () => {
+      const response = await getAllProds();
+      expect(response).to.be.an('array');
+    });
 
-  //   it('should return an array with length of 1', async () => {
-  //     const payLoad = { name: 'tv', quantity: 100 };
-  //     await createProd(payLoad.name, payLoad.quantity);
-  //     const response = await getAllProds();
-  //     expect(response.length).to.be.equal(1);
-  //   });
-  // });
+    it('should return an array with length of 1', async () => {
+      const payLoad = { name: 'tv', quantity: 100 };
+      await createProd(payLoad.name, payLoad.quantity);
+      const response = await getAllProds();
+      expect(response.length).to.be.equal(1);
+    });
+  });
 });
