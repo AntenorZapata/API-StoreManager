@@ -20,13 +20,23 @@ const lessThanZero = (value) => value <= NUM;
 const validate = async (name, quantity) => {
   const len  = 5;
 
+  // switch (true) {
+  if(nameLength(name, len)) return { code, message: errors.name_length };
+  // case isNumber(quantity): return { code, message: errors.quant_type };
+  // case lessThanZero(quantity): return { code, message: errors.quant_amount };
+  //   default: return {};
+  // }
+  return validateQuantity(quantity);
+};
+
+const validateQuantity = (quantity) => {
   switch (true) {
-  case nameLength(name, len): return { code, message: errors.name_length };
   case isNumber(quantity): return { code, message: errors.quant_type };
   case lessThanZero(quantity): return { code, message: errors.quant_amount };
   default: return {};
   }
 };
+
 
 const validateId = async (id) => {
 
