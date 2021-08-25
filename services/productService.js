@@ -15,7 +15,6 @@ const validateName = async (name) => {
 const createProduct = async (name, quantity) => {
   const nameValidation = await validateName(name);
 
-
   if(!nameValidation) {
     const product = await createProd(name, quantity);
     return product;

@@ -4,7 +4,7 @@ const ProducSchema = require('../schemas/ProductSchema');
 const validateProduct = async (req, res, next) => {
   const { name, quantity } = req.body;
 
-  const bad_request = 400;
+  // const bad_request = 400;
   const validations = await ProducSchema.validate(name, quantity);
 
   if (validations.message) {
