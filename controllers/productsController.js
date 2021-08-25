@@ -19,14 +19,16 @@ const create = async (req, res) => {
 };
 
 const getAll = async (req, res) => {
-  const { id } = req.params;
-
-  if (id) {
-    const product = await getProductById(id);
-    return res.status(STATUS_SUCCESS).json(product);
-  }
   const products = await getAllProducts();
   res.status(STATUS_SUCCESS).json(products);
+};
+
+const getById = async (req, res) => {
+  const { id } = req.params;
+
+  const product = await getProductById(id);
+  return res.status(STATUS_SUCCESS).json(product);
+
 };
 
 const update = async (req, res) => {
@@ -48,5 +50,6 @@ module.exports = {
   create,
   getAll,
   update,
-  remove
+  remove,
+  getById
 };
