@@ -36,10 +36,14 @@ const update = async (req, res) => {
   return res.status(STATUS_SUCCESS).json({ ...product });
 };
 
+const remove = async (req, res) => {
+  const {id} = req.params;
 
+};
 
 module.exports = {
   create,
   getAll,
   update,
+  remove
 };
