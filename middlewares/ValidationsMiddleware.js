@@ -1,5 +1,5 @@
 const ProducSchema = require('../schemas/ProductSchema');
-
+const { findById } = require('../models/saleModel');
 
 const validateProduct = async (req, res, next) => {
   const { name, quantity } = req.body;
@@ -19,9 +19,8 @@ const validateProduct = async (req, res, next) => {
   next();
 };
 
-
 const validateProductId = async (req, res, next) => {
-  const {id} = req.params;
+  const { id } = req.params;
 
   const validations = await ProducSchema.validateId(id);
 
@@ -40,8 +39,7 @@ const validateSaleQuantity = async (req, res, next) => {
   const body = req.body;
   let validation = {};
 
-
-  body.forEach(sale => {
+  body.forEach((sale) => {
     validation = ProducSchema.validateQuantity(sale.quantity);
   });
 
@@ -56,9 +54,26 @@ const validateSaleQuantity = async (req, res, next) => {
   next();
 };
 
+const validateSaleId = async (req, res, next) => {
+  const { id } = req.params;
+  const BAD_REQUEST = 404;
+  const len = 24;
+
+  if (id.length !== len || !(await findById(id))) {
+    return res.status(BAD_REQUEST).json({
+      err: {
+        code: 'not_found',
+        message: 'Sale not found',
+      },
+    });
+  }
+
+  next();
+};
+
 module.exports = {
   validateProduct,
   validateProductId,
-  validateSaleQuantity
-
+  validateSaleQuantity,
+  validateSaleId,
 };

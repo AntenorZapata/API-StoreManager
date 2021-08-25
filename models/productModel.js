@@ -51,6 +51,8 @@ const deleteProduct = async (id) => {
   return value;
 };
 
+
+
 module.exports = {
   createProd,
   getAllProds,
