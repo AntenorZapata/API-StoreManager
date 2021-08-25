@@ -4,15 +4,14 @@ const {
   validateSaleQuantity,
   validateSaleId } = require('../middlewares/ValidationsMiddleware');
 
-const { create, getAll, getById } = require('../controllers/salesController');
+const { create, getAll, getById, update } = require('../controllers/salesController');
 
 const router = express.Router();
 
 router.route('/').post(validateSaleQuantity, create);
 
 // router.route('/').post(validateProduct, create);
-router.route('/:id').get(validateSaleId, getById);
-//   .put(validateProduct, update)
+router.route('/:id').get(validateSaleId, getById).put(validateSaleQuantity, update);
 //   .delete(validateProductId, remove);
 router.route('/').get(getAll);
 

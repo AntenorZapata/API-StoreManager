@@ -1,4 +1,7 @@
-const { createSaleData, getAllSalesData, findById } = require('../models/saleModel');
+const { createSaleData,
+  getAllSalesData,
+  findById,
+  updateSaleData } = require('../models/saleModel');
 
 const createSale = async (body) => {
   const sales = await createSaleData(body);
@@ -15,8 +18,15 @@ const findSaleById = async (id) => {
   return sales;
 };
 
+const updateSale = async (id, productId, quantity) => {
+  const sales = await updateSaleData(id, productId, quantity);
+  return sales;
+
+};
+
 module.exports = {
   createSale,
   getAllSales,
-  findSaleById
+  findSaleById,
+  updateSale
 };
