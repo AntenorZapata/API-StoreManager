@@ -1,11 +1,12 @@
 const { createSaleData,
   getAllSalesData,
   findById,
-  updateSaleData } = require('../models/saleModel');
+  updateSaleData,
+  removeSaleData } = require('../models/saleModel');
 
 const createSale = async (body) => {
-  const sales = await createSaleData(body);
-  return sales;
+  const sale = await createSaleData(body);
+  return sale;
 };
 
 const getAllSales = async () => {
@@ -14,19 +15,24 @@ const getAllSales = async () => {
 };
 
 const findSaleById = async (id) => {
-  const sales = await findById(id);
-  return sales;
+  const sale = await findById(id);
+  return sale;
 };
 
 const updateSale = async (id, productId, quantity) => {
-  const sales = await updateSaleData(id, productId, quantity);
-  return sales;
+  const sale = await updateSaleData(id, productId, quantity);
+  return sale;
+};
 
+const removeSale = async (id) => {
+  const sale = await removeSaleData(id);
+  return sale;
 };
 
 module.exports = {
   createSale,
   getAllSales,
   findSaleById,
-  updateSale
+  updateSale,
+  removeSale
 };

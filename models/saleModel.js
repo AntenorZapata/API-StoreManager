@@ -49,7 +49,14 @@ const updateSaleData = async (id, productId, quantity) => {
     }
     ]
   };
+};
 
+
+const removeSaleData = async (id) => {
+  const { value } = await connection()
+    .then((db) => db.collection('sales').findOneAndDelete({ _id: ObjectId(id) }));
+
+  return value;
 };
 
 module.exports = {
@@ -57,4 +64,5 @@ module.exports = {
   getAllSalesData,
   findById,
   updateSaleData,
+  removeSaleData
 };

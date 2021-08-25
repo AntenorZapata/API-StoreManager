@@ -57,13 +57,24 @@ const validateSaleQuantity = async (req, res, next) => {
 const validateSaleId = async (req, res, next) => {
   const { id } = req.params;
   const BAD_REQUEST = 404;
+  const UNPROC = 422;
   const len = 24;
 
+  const errors = {
+    not_found: { code: 'not_found', message: 'Sale not found', status: BAD_REQUEST },
+    id_format: { code: 'invalid_data', message: 'Wrong sale ID format', status: UNPROC },
+  };
+
   if (id.length !== len || !(await findById(id))) {
-    return res.status(BAD_REQUEST).json({
+    let err = {};
+
+    if (req.method === 'DELETE') err = errors.id_format;
+    else err = errors.not_found;
+
+    return res.status(err.status).json({
       err: {
-        code: 'not_found',
-        message: 'Sale not found',
+        code: err.code,
+        message: err.message,
       },
     });
   }

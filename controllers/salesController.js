@@ -1,6 +1,8 @@
 const { createSale,
   getAllSales,
-  findSaleById, updateSale } = require('../services/salesService');
+  findSaleById,
+  updateSale,
+  removeSale } = require('../services/salesService');
 
 const STATUS_CREATED_SUCCESS = 201;
 const STATUS_SUCCESS = 200;
@@ -33,9 +35,18 @@ const update = async (req, res) => {
   return res.status(STATUS_SUCCESS).json(sales);
 };
 
+const remove = async (req, res) => {
+  const { id } = req.params;
+  const sale = await removeSale(id);
+
+  res.status(STATUS_SUCCESS).json(sale);
+
+};
+
 module.exports = {
   create,
   getAll,
   getById,
-  update
+  update,
+  remove
 };
