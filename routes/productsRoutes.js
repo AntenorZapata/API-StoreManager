@@ -1,7 +1,7 @@
 const express = require('express');
 const { create, getAll, update, remove } = require('../controllers/productsController');
 const { validateProduct,
-  validateProductId, validateName } = require('../middlewares/ProductMiddlewares');
+  validateProductId, validateName } = require('../middlewares/ValidationsMiddleware');
 
 const router = express.Router();
 

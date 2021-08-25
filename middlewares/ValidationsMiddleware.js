@@ -36,8 +36,29 @@ const validateProductId = async (req, res, next) => {
   next();
 };
 
+const validateSaleQuantity = async (req, res, next) => {
+  const body = req.body;
+  let validation = {};
+
+
+  body.forEach(sale => {
+    validation = ProducSchema.validateQuantity(sale.quantity);
+  });
+
+  if (validation.message) {
+    return res.status(validation.code).json({
+      err: {
+        code: 'invalid_data',
+        message: validation.message,
+      },
+    });
+  }
+  next();
+};
+
 module.exports = {
   validateProduct,
   validateProductId,
+  validateSaleQuantity
 
 };

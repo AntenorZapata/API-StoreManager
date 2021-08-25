@@ -11,6 +11,7 @@ const errors = {
   id: 'Wrong id format'
 };
 
+
 // const isNotString = (value) => typeof value !== 'string';
 const nameLength = (value, min) => value.length <= min;
 const isNumber = (value) => typeof value !== 'number';
@@ -20,19 +21,20 @@ const lessThanZero = (value) => value <= NUM;
 const validate = async (name, quantity) => {
   const len  = 5;
 
-  // switch (true) {
-  if(nameLength(name, len)) return { code, message: errors.name_length };
-  // case isNumber(quantity): return { code, message: errors.quant_type };
-  // case lessThanZero(quantity): return { code, message: errors.quant_amount };
-  //   default: return {};
-  // }
-  return validateQuantity(quantity);
+  switch (true) {
+  case nameLength(name, len): return { code, message: errors.name_length };
+  case isNumber(quantity): return { code, message: errors.quant_type };
+  case lessThanZero(quantity): return { code, message: errors.quant_amount };
+  default: return {};
+  }
+
 };
 
 const validateQuantity = (quantity) => {
+  const err =  'Wrong product ID or invalid quantity';
   switch (true) {
-  case isNumber(quantity): return { code, message: errors.quant_type };
-  case lessThanZero(quantity): return { code, message: errors.quant_amount };
+  case isNumber(quantity): return { code, message:  err};
+  case lessThanZero(quantity): return { code, message: err };
   default: return {};
   }
 };
@@ -48,4 +50,4 @@ const validateId = async (id) => {
 };
 
 
-module.exports = { validate, validateId };
+module.exports = { validate, validateId, validateQuantity };
