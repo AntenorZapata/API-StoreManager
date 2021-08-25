@@ -45,15 +45,10 @@ const getProdById = async (id) => {
 };
 
 const deleteProduct = async (id) => {
-  const { insertedId, name, quantity } = await connection()
-    .then((db) => db.collection('products').deleteOne(ObjectId(id)))
-    .then((result) => result);
+  const { value } = await connection()
+    .then((db) => db.collection('products').findOneAndDelete({ _id: ObjectId(id) }));
 
-  return {
-    _id: insertedId,
-    name,
-    quantity
-  };
+  return value;
 };
 
 module.exports = {
