@@ -9,7 +9,7 @@ router.route('/').post(validateProduct, create);
 router.route('/:id')
   .get(validateProductId, getAll)
   .put(validateProduct, update)
-  .delete(remove);
+  .delete(validateProductId, remove);
 
 router.route('/').get(getAll);
 
