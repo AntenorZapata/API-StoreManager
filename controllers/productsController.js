@@ -3,6 +3,7 @@ const {
   getAllProducts,
   getProductById,
   updateProduct,
+  removeProduct
 } = require('../services/productService');
 
 const STATUS_CREATED_SUCCESS = 201;
@@ -34,6 +35,8 @@ const update = async (req, res) => {
   const product = await updateProduct(id, name, quantity);
   return res.status(STATUS_SUCCESS).json({ ...product });
 };
+
+
 
 module.exports = {
   create,

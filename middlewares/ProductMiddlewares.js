@@ -20,7 +20,6 @@ const validateProduct = async (req, res, next) => {
 };
 
 
-
 const validateProductId = async (req, res, next) => {
   const {id} = req.params;
 
