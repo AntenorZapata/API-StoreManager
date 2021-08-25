@@ -1,18 +1,8 @@
+const {createSaleData} = require('../models/saleModel');
 
-
-const createSale = async (name, quantity) => {
-  const nameValidation = await validateName(name);
-
-  if(!nameValidation) {
-    const product = await createProd(name, quantity);
-    return product;
-  } else {
-    return { err: {
-      code: 'invalid_data',
-      message: 'Product already exists'
-    } };
-  }
-
+const createSale = async (body) => {
+  const sales = await createSaleData(body);
+  return sales;
 };
 
 

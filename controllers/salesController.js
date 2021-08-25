@@ -1,12 +1,9 @@
 const {createSale} = require('../services/salesService');
 
 const create = async (req, res) => {
-  const { productId, quantity } = req.body;
-
-  const product = await createSale(name, quantity);
-
-  if (product.err) return res.status(BAD_REQUEST).json(product);
-  return res.status(STATUS_CREATED_SUCCESS).json({ ...product });
+  const bodySales = req.body;
+  const sales = await createSale(bodySales);
+  res.status(200).json(sales);
 };
 
 module.exports = {
