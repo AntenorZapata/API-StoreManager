@@ -1,4 +1,4 @@
-const { getAllProds } = require('../models/productModel');
+const { getAllProds, getProdById } = require('../models/productModel');
 
 const NUM = 0;
 const code = 422;
@@ -8,7 +8,8 @@ const errors = {
   quant_type: '"quantity" must be a number',
   quant_amount: '"quantity" must be larger than or equal to 1',
   name: 'Product already exists',
-  id: 'Wrong id format'
+  id: 'Wrong id format',
+  amount: 'Such amount is not permitted to sell'
 };
 
 
@@ -16,6 +17,13 @@ const errors = {
 const nameLength = (value, min) => value.length <= min;
 const isNumber = (value) => typeof value !== 'number';
 const lessThanZero = (value) => value <= NUM;
+const stockFail =  (quantity, prodQuant) =>  {
+
+
+
+  return quantity > prodQuant;
+
+};
 
 
 const validate = async (name, quantity) => {
@@ -24,17 +32,22 @@ const validate = async (name, quantity) => {
   switch (true) {
   case nameLength(name, len): return { code, message: errors.name_length };
   case isNumber(quantity): return { code, message: errors.quant_type };
-  case lessThanZero(quantity): return { code, message: errors.quant_amount };
+  case lessThanZero(quantity): return { code: 404, message: errors.quant_amount };
   default: return {};
   }
 
 };
 
-const validateQuantity = (quantity) => {
+const validateQuantity = async (quantity, id) => {
+
+
+
+
   const err =  'Wrong product ID or invalid quantity';
   switch (true) {
   case isNumber(quantity): return { code, message:  err};
   case lessThanZero(quantity): return { code, message: err };
+  // case +quantity > +prod.quantity: return {code: 404, message: errors.amount };
   default: return {};
   }
 };

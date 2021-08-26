@@ -1,5 +1,7 @@
 const ProducSchema = require('../schemas/ProductSchema');
 const { findById } = require('../models/saleModel');
+const { getProdById } = require('../models/productModel');
+
 
 const validateProduct = async (req, res, next) => {
   const { name, quantity } = req.body;
@@ -40,8 +42,10 @@ const validateSaleQuantity = async (req, res, next) => {
   let validation = {};
 
   body.forEach((sale) => {
-    validation = ProducSchema.validateQuantity(sale.quantity);
+    validation = ProducSchema.validateQuantity(sale.quantity, sale.productId);
   });
+
+
 
   if (validation.message) {
     return res.status(validation.code).json({
@@ -69,6 +73,7 @@ const validateSaleId = async (req, res, next) => {
     let err = {};
 
     if (req.method === 'DELETE') err = errors.id_format;
+    // console.log(err);
     else err = errors.not_found;
 
     return res.status(err.status).json({
