@@ -2,7 +2,6 @@ const ProducSchema = require('../schemas/ProductSchema');
 const { findById } = require('../models/saleModel');
 const { getProdById } = require('../models/productModel');
 
-
 const validateProduct = async (req, res, next) => {
   const { name, quantity } = req.body;
 
@@ -42,9 +41,9 @@ const validateSaleQuantity = async (req, res, next) => {
   const index = 0;
   const bad_code = 404;
 
-  for(let i = index; i < body.length; i += 1){
-    const validation = await ProducSchema.validateQuantity(body[i].quantity,
-      body[i].productId);
+  for (let i = index; i < body.length; i += 1) {
+    const validation = await ProducSchema
+      .validateQuantity(body[i].quantity, body[i].productId);
 
     if (validation.message) {
       const code = validation.code === bad_code ? 'stock_problem' : 'invalid_data';
@@ -74,7 +73,6 @@ const validateSaleId = async (req, res, next) => {
     let err = {};
 
     if (req.method === 'DELETE') err = errors.id_format;
-    // console.log(err);
     else err = errors.not_found;
 
     return res.status(err.status).json({

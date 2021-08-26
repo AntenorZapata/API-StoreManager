@@ -12,12 +12,9 @@ const errors = {
   amount: 'Such amount is not permitted to sell'
 };
 
-
-// const isNotString = (value) => typeof value !== 'string';
 const nameLength = (value, min) => value.length <= min;
 const isNumber = (value) => typeof value !== 'number';
 const lessThanZero = (value) => value <= NUM;
-
 
 const validate = async (name, quantity) => {
   const len  = 5;
@@ -28,7 +25,6 @@ const validate = async (name, quantity) => {
   case lessThanZero(quantity): return { code, message: errors.quant_amount };
   default: return {};
   }
-
 };
 
 const validateQuantity = async (quantity, id) => {
@@ -41,7 +37,6 @@ const validateQuantity = async (quantity, id) => {
   default: return {};
   }
 };
-
 
 const validateId = async (id) => {
 

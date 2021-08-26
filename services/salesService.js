@@ -6,27 +6,9 @@ const {
   removeSaleData,
 } = require('../models/saleModel');
 
-const {getProdById} = require('../models/productModel');
-
 const createSale = async (body) => {
-  // const {productId, quantity} = body[0];
-
-  // const prod = await getProdById(productId);
-
-
-  // if (quantity > +prod.quantity) {
-  //   return {
-  //     err: {
-  //       code: 'stock_problem',
-  //       message: 'Such amount is not permitted to sell',
-  //     },
-  //   };
-  // } else {
   const sale = await createSaleData(body);
   return sale;
-  // }
-
-
 };
 
 const getAllSales = async () => {

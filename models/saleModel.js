@@ -2,14 +2,7 @@ const connection = require('./connection');
 const { ObjectId } = require('mongodb');
 const { updateProdQuantity, getProdById, getAllProds } = require('./productModel');
 
-
-const validateQuantity = (prod, el) => {
-
-};
-
 const createSaleData = async (bodySales) => {
-  // const { productId, quantity } = bodySales[0];
-  // console.log(bodySales);
 
   bodySales.forEach(async (el) => {
     await updateProdQuantity(el.productId, el.quantity, 'decrease');
@@ -26,7 +19,8 @@ const createSaleData = async (bodySales) => {
 };
 
 const getAllSalesData = async () => {
-  const allSales = await connection().then((db) => db.collection('sales').find().toArray());
+  const allSales = await connection()
+    .then((db) => db.collection('sales').find().toArray());
 
   return {
     sales: allSales,

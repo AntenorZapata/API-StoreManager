@@ -24,7 +24,6 @@ const createProduct = async (name, quantity) => {
       message: 'Product already exists'
     } };
   }
-
 };
 
 const getAllProducts = async () => {
@@ -45,7 +44,6 @@ const updateProduct = async (id, name, quantity) => {
 const removeProduct = async (id) => {
   const product = await deleteProduct(id);
   return product;
-
 };
 
 module.exports = {
