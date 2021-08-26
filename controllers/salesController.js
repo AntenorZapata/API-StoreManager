@@ -7,11 +7,14 @@ const { createSale,
 const STATUS_CREATED_SUCCESS = 201;
 const STATUS_SUCCESS = 200;
 const BAD_REQUEST = 422;
+const NOT_FOUND = 404;
 
 const create = async (req, res) => {
   const bodySales = req.body;
 
   const sales = await createSale(bodySales);
+
+  if(sales.err) return res.status(NOT_FOUND).json(sales);
   res.status(STATUS_SUCCESS).json(sales);
 };
 

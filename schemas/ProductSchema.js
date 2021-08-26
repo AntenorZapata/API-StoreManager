@@ -17,13 +17,6 @@ const errors = {
 const nameLength = (value, min) => value.length <= min;
 const isNumber = (value) => typeof value !== 'number';
 const lessThanZero = (value) => value <= NUM;
-const stockFail =  (quantity, prodQuant) =>  {
-
-
-
-  return quantity > prodQuant;
-
-};
 
 
 const validate = async (name, quantity) => {
@@ -32,22 +25,19 @@ const validate = async (name, quantity) => {
   switch (true) {
   case nameLength(name, len): return { code, message: errors.name_length };
   case isNumber(quantity): return { code, message: errors.quant_type };
-  case lessThanZero(quantity): return { code: 404, message: errors.quant_amount };
+  case lessThanZero(quantity): return { code, message: errors.quant_amount };
   default: return {};
   }
 
 };
 
 const validateQuantity = async (quantity, id) => {
-
-
-
-
+  const item = await getProdById(id);
   const err =  'Wrong product ID or invalid quantity';
   switch (true) {
   case isNumber(quantity): return { code, message:  err};
   case lessThanZero(quantity): return { code, message: err };
-  // case +quantity > +prod.quantity: return {code: 404, message: errors.amount };
+  case +quantity > +item.quantity: return {code: 404, message: errors.amount };
   default: return {};
   }
 };

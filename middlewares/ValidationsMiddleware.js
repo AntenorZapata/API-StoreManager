@@ -39,21 +39,22 @@ const validateProductId = async (req, res, next) => {
 
 const validateSaleQuantity = async (req, res, next) => {
   const body = req.body;
-  let validation = {};
+  const index = 0;
+  const bad_code = 404;
 
-  body.forEach((sale) => {
-    validation = ProducSchema.validateQuantity(sale.quantity, sale.productId);
-  });
+  for(let i = index; i < body.length; i += 1){
+    const validation = await ProducSchema.validateQuantity(body[i].quantity,
+      body[i].productId);
 
-
-
-  if (validation.message) {
-    return res.status(validation.code).json({
-      err: {
-        code: 'invalid_data',
-        message: validation.message,
-      },
-    });
+    if (validation.message) {
+      const code = validation.code === bad_code ? 'stock_problem' : 'invalid_data';
+      return res.status(validation.code).json({
+        err: {
+          code,
+          message: validation.message,
+        },
+      });
+    }
   }
   next();
 };
