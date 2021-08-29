@@ -15,18 +15,17 @@ const createProd = async (name, quantity) => {
 
 const getAllProds = async () => {
   const result = await connection()
-    .then((db) => db.collection('products').find().toArray())
-    .then((result) => result);
+    .then((db) => db.collection('products').find().toArray());
 
   return {
     products: result,
   };
 };
 
+
 const updateProd = async (id, name, quantity) => {
   const { insertedId } = await connection().then((db) =>
-    db.collection('products')
-      .updateOne({ _id: ObjectId(id) }, { $set: { name, quantity } }),
+    db.collection('products').updateOne({ _id: ObjectId(id) }, { $set: { name, quantity } }),
   );
 
   return {
@@ -39,9 +38,7 @@ const updateProd = async (id, name, quantity) => {
 const updateProdQuantity = async (id, newQuant, value) => {
   const newValue = value === 'increase' ? +newQuant : -newQuant;
   await connection().then((db) =>
-    db
-      .collection('products')
-      .updateOne({ _id: ObjectId(id) }, { $inc: { quantity: newValue} }),
+    db.collection('products').updateOne({ _id: ObjectId(id) }, { $inc: { quantity: newValue } }),
   );
 };
 
@@ -69,5 +66,5 @@ module.exports = {
   deleteProduct,
   // decreaseProdQuantity,
   // increaseProdQuantity,
-  updateProdQuantity
+  updateProdQuantity,
 };
