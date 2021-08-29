@@ -3,7 +3,13 @@ const sinon = require('sinon');
 const { MongoClient } = require('mongodb');
 const { MongoMemoryServer } = require('mongodb-memory-server');
 const { ObjectId } = require('mongodb');
-const { createProd, getAllProds, getProdById, updateProd } = require('../../models/productModel');
+const {
+  createProd,
+  getAllProds,
+  getProdById,
+  updateProd,
+  deleteProduct,
+} = require('../../models/productModel');
 
 describe('Product Model Tests', () => {
   let connectionMock;
@@ -81,6 +87,7 @@ describe('Product Model Tests', () => {
           .collection('products')
           .insertOne({ _id: ObjectId('612c16491910a4dc21c7f134'), name: 'Tv', quantity: 2 });
         const res = await getProdById(ObjectId('612c16491910a4dc21c7f134'));
+
         expect(res).to.be.an('object');
         expect(res.name).to.be.equal('Tv');
         expect(res.quantity).to.be.equal(2);
@@ -123,6 +130,57 @@ describe('Product Model Tests', () => {
       it('should return an object with the properties _id, name and quantity', async () => {
         const res = await createProd({ name: 'borracha', quantity: 2 });
         expect(res).to.have.all.keys('_id', 'name', 'quantity');
+      });
+    });
+  });
+
+  describe('DELETE method', () => {
+    describe('on success', async () => {
+      before(async () => {
+        const db = connectionMock.db('StoreManager');
+        await db
+          .collection('products')
+          .insertOne({ _id: ObjectId('612c16491910a4dc21c7f134'), name: 'Tv', quantity: 2 });
+      });
+
+      it('should return a product', async () => {
+        const res = await deleteProduct(ObjectId('612c16491910a4dc21c7f134'));
+        expect(res).to.be.an('object');
+      });
+
+      it('should return an object with the properties _id, name and quantity', async () => {
+        const res = await deleteProduct(ObjectId('612c16491910a4dc21c7f134'));
+        expect(res).to.have.all.keys('_id', 'name', 'quantity');
+        expect(res.name).to.be.equal('Tv');
+        expect(res.quantity).to.be.equal(2);
+      });
+
+      it('should return an array with length equal to zero', async () => {
+        await deleteProduct(ObjectId('612c16491910a4dc21c7f134'));
+        const res = await getAllProds();
+        expect(res.products.length).to.be.equal(0);
+      });
+    });
+
+    describe('bad request', () => {
+      before(async () => {
+        const db = connectionMock.db('StoreManager');
+        await db
+          .collection('products')
+          .insertOne({ _id: ObjectId('612c16491910a4dc21c7f134'), name: 'Tv', quantity: 2 });
+      });
+
+      it('should return an object with the err property', async () => {
+        const res = await deleteProduct(ObjectId('612c16491910a4dc21c7f134'));
+        expect(res).to.haveOwnProperty('err');
+      });
+      it('should return an err property with the code equal to "invalid_data"', async () => {
+        const res = await deleteProduct(ObjectId('612c16491910a4dc21c7f134'));
+        expect(res.err.code).to.be.equal('invalid_data');
+      });
+      it('should return an err property with the message equal to "quantity must be a number"', async () => {
+        const res = await deleteProduct(ObjectId('612c16491910a4dc21c7f134'));
+        expect(res.err.message).to.be.equal('Wrong id format');
       });
     });
   });
