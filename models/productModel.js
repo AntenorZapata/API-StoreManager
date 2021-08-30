@@ -39,7 +39,8 @@ const updateProd = async (id, name, quantity) => {
 const updateProdQuantity = async (id, newQuant, value) => {
   const newValue = value === 'increase' ? +newQuant : -newQuant;
   await connection().then((db) =>
-    db.collection('products').updateOne({ _id: ObjectId(id) }, { $inc: { quantity: newValue } }),
+    db.collection('products')
+      .updateOne({ _id: ObjectId(id) }, { $inc: { quantity: newValue } }),
   );
 };
 
