@@ -3,7 +3,6 @@ const { ObjectId } = require('mongodb');
 const { updateProdQuantity, getProdById, getAllProds } = require('./productModel');
 
 const createSaleData = async (bodySales) => {
-
   bodySales.forEach(async (el) => {
     await updateProdQuantity(el.productId, el.quantity, 'decrease');
   });

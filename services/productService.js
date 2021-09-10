@@ -2,20 +2,16 @@ const { createProd,
   getAllProds,
   getProdById,
   deleteProduct,
+  getProdByName,
   updateProd } = require('../models/productModel');
 
 
-const validateName = async (name) => {
-  const allProducts = await getAllProds();
-  const prodByName = allProducts.products.find((item) => item.name === name);
-  if (prodByName) return true;
-  return false;
-};
 
 const createProduct = async (name, quantity) => {
-  const nameValidation = await validateName(name);
 
-  if(!nameValidation) {
+  const product = await getProdByName(name);
+
+  if(!product) {
     const product = await createProd(name, quantity);
     return product;
   } else {
