@@ -3,15 +3,15 @@ const { create,
   getAll, update,
   remove, getById } = require('../controllers/productsController');
 const { validateProduct,
-  validateProductId, validateName } = require('../middlewares/ValidationsMiddleware');
+  validateProductId } = require('../middlewares/ValidationsMiddleware');
 
 const router = express.Router();
 
-router.route('/').post(validateProduct, create);
+router.route('/').post(create);
 
 router.route('/:id')
-  .get(validateProductId, getById)
-  .put(validateProduct, update)
+  .get(getById)
+  .put(update)
   .delete(validateProductId, remove);
 
 router.route('/').get(getAll);

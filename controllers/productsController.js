@@ -3,53 +3,47 @@ const {
   getAllProducts,
   getProductById,
   updateProduct,
-  removeProduct
+  removeProduct,
 } = require('../services/productService');
+const catchAsync = require('../utils/catchAsync');
 
 const STATUS_CREATED_SUCCESS = 201;
 const STATUS_SUCCESS = 200;
-const BAD_REQUEST = 422;
 
-const create = async (req, res) => {
+const create = catchAsync(async (req, res) => {
   const { name, quantity } = req.body;
   const product = await createProduct(name, quantity);
-
-  if (product.err) return res.status(BAD_REQUEST).json(product);
   return res.status(STATUS_CREATED_SUCCESS).json({ ...product });
-};
+});
 
-const getAll = async (req, res) => {
+const getAll = catchAsync(async (req, res) => {
   const products = await getAllProducts();
   res.status(STATUS_SUCCESS).json(products);
-};
+});
 
-const getById = async (req, res) => {
+const getById = catchAsync(async (req, res) => {
   const { id } = req.params;
-
   const product = await getProductById(id);
   return res.status(STATUS_SUCCESS).json(product);
+});
 
-};
-
-const update = async (req, res) => {
+const update = catchAsync(async (req, res) => {
   const { name, quantity } = req.body;
   const { id } = req.params;
   const product = await updateProduct(id, name, quantity);
   return res.status(STATUS_SUCCESS).json({ ...product });
-};
+});
 
-const remove = async (req, res) => {
+const remove = catchAsync(async (req, res) => {
   const { id } = req.params;
   const product = await removeProduct(id);
-
   res.status(STATUS_SUCCESS).json(product);
-
-};
+});
 
 module.exports = {
   create,
   getAll,
   update,
   remove,
-  getById
+  getById,
 };
