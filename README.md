@@ -1,6 +1,5 @@
 
-## API CRUD - NodeJs, Express e MongoDB / Arquitetura MSC / TDD.
-
+## API CRUD - NodeJs, Express e MongoDB / Arquitetura MSC 
 API para um sistema de gerenciamento de vendas.
 
 # Habilidades
